@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WebDev Hub — Build Websites the Right Way</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0a0a0f;--surface:#111118;--card:#16161f;--card-hover:#1c1c28;
+      --border:#252530;--border-hover:#3a3a50;
+      --accent:#7c6af7;--accent-dim:rgba(124,106,247,0.15);--accent-glow:rgba(124,106,247,0.3);
+      --accent2:#4ecdc4;--accent2-dim:rgba(78,205,196,0.12);
+      --accent3:#f7c948;--text:#eeedf5;--muted:#7a7890;--muted2:#55546a;
+      --tag-bg:#1e1e28;--radius:12px;
+    }
+    body.theme-light{--bg:#f5f4f9;--surface:#ededf5;--card:#fff;--card-hover:#f0effe;--border:#e0dff0;--border-hover:#c0bce0;--text:#1a1830;--muted:#6b6885;--muted2:#9d9ab5;--tag-bg:#f0effe;--accent-dim:rgba(124,106,247,0.1);--accent-glow:rgba(124,106,247,0.25);--accent2-dim:rgba(78,205,196,0.1)}
+    body.theme-sepia{--bg:#1a1510;--surface:#201a12;--card:#26200f;--card-hover:#2e2714;--border:#3a3020;--border-hover:#4a4030;--text:#f0e6c8;--muted:#9a8a6a;--muted2:#6a5a4a;--tag-bg:#201a10;--accent:#e8a040;--accent-dim:rgba(232,160,64,0.15);--accent-glow:rgba(232,160,64,0.3)}
+    body.theme-ocean{--bg:#050d1a;--surface:#091525;--card:#0d1e32;--card-hover:#122540;--border:#1a3050;--border-hover:#2a4060;--text:#d0eaf8;--muted:#6090b0;--muted2:#405070;--tag-bg:#0d1e32;--accent:#38bdf8;--accent-dim:rgba(56,189,248,0.15);--accent-glow:rgba(56,189,248,0.3);--accent2:#34d399}
+    body.theme-forest{--bg:#08110a;--surface:#0d180f;--card:#121f14;--card-hover:#182818;--border:#1e3020;--border-hover:#2e4030;--text:#d4eed8;--muted:#5a8060;--muted2:#3a5040;--tag-bg:#0d1a0f;--accent:#4ade80;--accent-dim:rgba(74,222,128,0.15);--accent-glow:rgba(74,222,128,0.3);--accent2:#a3e635}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:3px}
+    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(10,10,15,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:8px}
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:1.5rem}
+    .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-right{display:flex;align-items:center;gap:8px}
+    .nav-badge{font-size:11px;font-family:'DM Mono',monospace;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-glow);border-radius:20px;padding:4px 12px}
+    .progress-bar-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 2rem;display:flex;align-items:center;gap:12px}
+    .progress-label{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap}
+    .progress-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(to right,var(--accent),var(--accent2));border-radius:3px;transition:width .5s ease;width:0%}
+    .progress-pct{font-size:12px;font-family:'DM Mono',monospace;color:var(--accent);min-width:32px;text-align:right}
+    .saved-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 2rem;display:none;align-items:center;gap:10px;flex-wrap:wrap}
+    .saved-bar.show{display:flex}
+    .saved-bar-label{font-size:12px;font-family:'DM Mono',monospace;color:var(--accent)}
+    .saved-pills{display:flex;flex-wrap:wrap;gap:6px}
+    .saved-pill{font-size:11px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-glow);border-radius:20px;padding:3px 10px;display:flex;align-items:center;gap:4px}
+    .saved-pill button{background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;padding:0;line-height:1}
+    .hero{padding:5rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+    .hero-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(124,106,247,0.2) 0%,transparent 70%);pointer-events:none}
+    .hero-dots{position:absolute;inset:0;background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);background-size:32px 32px;opacity:0.5;pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-glow);border-radius:20px;padding:5px 14px;margin-bottom:1.5rem;position:relative}
+    .hero-eyebrow::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+    h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:1.2rem;position:relative}
+    h1 .ac{color:var(--accent)}h1 .ac2{color:var(--accent2)}
+    .hero-sub{font-size:16px;color:var(--muted);max-width:500px;margin:0 auto 2.5rem;line-height:1.75}
+    .hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;position:relative}
+    .btn{display:inline-flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:11px 22px;border-radius:10px;cursor:pointer;text-decoration:none;border:none;transition:all .2s;white-space:nowrap}
+    .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{filter:brightness(1.15);transform:translateY(-1px)}
+    .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--border-hover);background:var(--card)}
+    .btn-sm{font-size:13px;padding:8px 16px;border-radius:8px}
+    .stats-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:2.5rem;padding:2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:0 2rem}
+    .stat{text-align:center}.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent)}.stat-label{font-size:12px;color:var(--muted);margin-top:2px}
+    .container{max-width:1100px;margin:0 auto;padding:0 2rem}
+    section{padding:4rem 2rem}
+    .section-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+    .section-header h2{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;white-space:nowrap}
+    .section-header::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+    .section-tag{font-family:'DM Mono',monospace;font-size:10px;background:var(--tag-bg);color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:2px 8px;white-space:nowrap}
+    .search-bar{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;margin-bottom:1.5rem;max-width:480px}
+    .search-bar svg{color:var(--muted);flex-shrink:0}
+    .search-bar input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif}
+    .search-bar input::placeholder{color:var(--muted2)}
+    .filter-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem}
+    .tab{font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+    .tab:hover{border-color:var(--border-hover);color:var(--text)}
+    .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:all .25s;position:relative;overflow:hidden;display:flex;flex-direction:column}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--accent-glow),transparent);opacity:0;transition:opacity .25s}
+    .card:hover{border-color:var(--accent-glow);background:var(--card-hover);transform:translateY(-3px)}
+    .card:hover::before{opacity:1}
+    .card.saved-card{border-color:var(--accent-glow)}
+    .card.in-compare{border-color:var(--accent)!important}
+    .card-actions{position:absolute;top:10px;right:10px;display:flex;gap:5px}
+    .btn-icon{background:var(--tag-bg);border:1px solid var(--border);border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s}
+    .btn-icon:hover{border-color:var(--border-hover)}
+    .btn-icon.on{background:var(--accent-dim);border-color:var(--accent-glow)}
+    .compare-num{position:absolute;top:10px;left:10px;font-size:10px;font-family:'DM Mono',monospace;background:var(--accent);color:#fff;border-radius:5px;padding:2px 7px;display:none}
+    .card.in-compare .compare-num{display:block}
+    .card-icon{font-size:22px;margin-bottom:10px;width:44px;height:44px;background:var(--tag-bg);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .card-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
+    .card-desc{font-size:12.5px;color:var(--muted);line-height:1.55;flex:1;margin-bottom:12px}
+    .card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+    .tag{font-size:10px;font-family:'DM Mono',monospace;background:var(--tag-bg);color:var(--muted2);border:1px solid var(--border);border-radius:4px;padding:2px 7px}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border)}
+    .card-link{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:var(--accent);text-decoration:none;font-family:'DM Mono',monospace;transition:gap .2s}
+    .card-link:hover{gap:7px}
+    .card-cat-badge{font-size:10px;font-family:'DM Mono',monospace;border-radius:4px;padding:2px 7px}
+    .no-results{grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:14px}
+    .no-results span{font-size:2rem;display:block;margin-bottom:8px}
+    .steps-list{display:flex;flex-direction:column;gap:1rem}
+    .step{display:flex;gap:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;transition:all .2s;cursor:pointer;user-select:none}
+    .step:hover{border-color:var(--border-hover)}
+    .step.done{border-color:var(--accent2);background:var(--accent2-dim)}
+    .step-num{min-width:40px;height:40px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--accent);font-weight:500;flex-shrink:0;transition:all .2s}
+    .step.done .step-num{background:var(--accent2);border-color:var(--accent2);color:#fff}
+    .step-content{flex:1}
+    .step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:5px}
+    .step-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+    .step-tools{display:flex;flex-wrap:wrap;gap:6px}
+    .step-tool{font-size:11px;font-family:'DM Mono',monospace;background:var(--accent2-dim);color:var(--accent2);border:1px solid rgba(78,205,196,0.2);border-radius:5px;padding:3px 10px}
+    .step-hint{font-size:11px;color:var(--muted2);margin-top:8px;font-style:italic}
+    .step-connector{width:1px;height:16px;background:var(--border);margin:0 0 0 2.75rem}
+    .compare-float{position:fixed;bottom:24px;right:24px;z-index:300;background:var(--card);border:1px solid var(--accent-glow);border-radius:14px;padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none;flex-direction:column;gap:10px;max-width:260px}
+    .compare-float.visible{display:flex}
+    .compare-float-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+    .compare-items{display:flex;flex-direction:column;gap:5px}
+    .compare-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+    .compare-item::before{content:'✦';color:var(--accent);font-size:10px}
+    .compare-actions{display:flex;gap:8px}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:400;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;max-width:900px;width:100%;max-height:90vh;overflow-y:auto}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .modal-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700}
+    .modal-close{background:var(--tag-bg);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--muted);transition:all .2s}
+    .modal-close:hover{color:var(--text)}
+    .compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    .compare-col{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .compare-col-head{padding:1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+    .compare-col-body{padding:1rem;display:flex;flex-direction:column;gap:12px}
+    .cmp-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--muted2);text-transform:uppercase;margin-bottom:3px}
+    .cmp-val{font-size:13px;line-height:1.5}
+    .theme-picker{display:flex;gap:6px;align-items:center}
+    .theme-dot{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s}
+    .theme-dot:hover,.theme-dot.active{border-color:var(--text);transform:scale(1.15)}
+    .quiz-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;max-width:640px}
+    .quiz-prog{display:flex;gap:6px;margin-bottom:1.5rem}
+    .quiz-dot{flex:1;height:4px;border-radius:2px;background:var(--border);transition:background .3s}
+    .quiz-dot.done{background:var(--accent)}
+    .quiz-dot.cur{background:var(--accent);opacity:.5}
+    .quiz-q{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:1.25rem}
+    .quiz-opts{display:flex;flex-direction:column;gap:8px}
+    .quiz-opt{background:var(--tag-bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;cursor:pointer;font-size:14px;transition:all .2s;text-align:left;color:var(--text);font-family:'DM Sans',sans-serif}
+    .quiz-opt:hover{border-color:var(--accent-glow);background:var(--accent-dim)}
+    .quiz-opt.sel{border-color:var(--accent);background:var(--accent-dim);color:var(--accent)}
+    .quiz-result-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:8px}
+    .quiz-result-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem}
+    .quiz-roadmap{display:flex;flex-direction:column;gap:8px}
+    .quiz-step{background:var(--tag-bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;display:flex;gap:10px}
+    .quiz-step-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);min-width:24px}
+    .quiz-step-text{font-size:13px;line-height:1.5}
+    .ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:700px){.ai-grid{grid-template-columns:1fr}}
+    .ai-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:12px}
+    .ai-card-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
+    .ai-card-desc{font-size:13px;color:var(--muted);line-height:1.6}
+    .ai-input{width:100%;background:var(--tag-bg);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;resize:vertical;outline:none;min-height:90px;transition:border .2s}
+    .ai-input:focus{border-color:var(--accent-glow)}
+    .ai-output{background:var(--tag-bg);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13px;color:var(--text);line-height:1.7;min-height:60px;white-space:pre-wrap;display:none}
+    .ai-output.show{display:block}
+    .ai-loading{display:none;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+    .ai-loading.show{display:flex}
+    .spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .resources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+    .resource-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:all .2s;text-decoration:none;color:inherit;display:flex;gap:14px;align-items:flex-start}
+    .resource-card:hover{border-color:var(--border-hover);background:var(--card-hover)}
+    .resource-icon{font-size:20px;width:40px;height:40px;background:var(--tag-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .resource-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+    .resource-desc{font-size:12px;color:var(--muted);line-height:1.5}
+    .cheat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+    .cheat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .cheat-header{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .cheat-head-left{display:flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700}
+    .cheat-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    .copy-btn{font-size:11px;font-family:'DM Mono',monospace;background:var(--tag-bg);border:1px solid var(--border);border-radius:5px;padding:3px 10px;cursor:pointer;color:var(--muted);transition:all .2s}
+    .copy-btn:hover{border-color:var(--accent-glow);color:var(--accent)}
+    .copy-btn.ok{background:var(--accent-dim);border-color:var(--accent-glow);color:var(--accent)}
+    pre{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);padding:1rem 1.25rem;line-height:1.7;overflow-x:auto}
+    pre .kw{color:var(--accent)}pre .str{color:var(--accent3)}pre .fn{color:var(--accent2)}pre .cm{color:var(--muted2)}
+    footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:12px;color:var(--muted2)}
+    footer a{color:var(--muted);text-decoration:none}footer a:hover{color:var(--accent)}
+    @media(max-width:640px){nav{padding:0 1rem}.nav-links{display:none}section{padding:3rem 1rem}h1{font-size:2rem}.stats-bar{gap:1.5rem;margin:0 1rem}.compare-float{bottom:16px;right:16px;left:16px;max-width:none}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .hero>*{animation:fadeUp .6s ease both}
+    .hero-eyebrow{animation-delay:.05s}h1{animation-delay:.1s}.hero-sub{animation-delay:.15s}.hero-ctas{animation-delay:.2s}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">⬡ <span>WebDev</span>Hub</div>
+  <div class="nav-links">
+    <a href="#roadmap">Roadmap</a><a href="#tools">Tools</a><a href="#quiz">Quiz</a>
+    <a href="#ai">AI</a><a href="#cheatsheet">Cheatsheet</a><a href="#resources">Resources</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-badge">v2.0</span>
+    <div class="theme-picker">
+      <div class="theme-dot active" style="background:linear-gradient(135deg,#7c6af7,#4ecdc4)" onclick="setTheme('dark',this)" title="Dark"></div>
+      <div class="theme-dot" style="background:linear-gradient(135deg,#a78bfa,#ededf5)" onclick="setTheme('light',this)" title="Light"></div>
+      <div class="theme-dot" style="background:linear-gradient(135deg,#e8a040,#26200f)" onclick="setTheme('sepia',this)" title="Sepia"></div>
+      <div class="theme-dot" style="background:linear-gradient(135deg,#38bdf8,#050d1a)" onclick="setTheme('ocean',this)" title="Ocean"></div>
+      <div class="theme-dot" style="background:linear-gradient(135deg,#4ade80,#08110a)" onclick="setTheme('forest',this)" title="Forest"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">🗺️ Roadmap progress</span>
+  <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+  <span class="progress-pct" id="ppct">0%</span>
+</div>
+
+<div class="saved-bar" id="saved-bar">
+  <span class="saved-bar-label">❤️ Saved:</span>
+  <div class="saved-pills" id="saved-pills"></div>
+  <button class="btn btn-sm btn-outline" onclick="clearSaved()">Clear all</button>
+</div>
+
+<div class="hero">
+  <div class="hero-dots"></div><div class="hero-glow"></div>
+  <div class="hero-eyebrow">Your complete web dev starter kit</div>
+  <h1>Build websites<br><span class="ac">the right way</span> —<br>step by <span class="ac2">step</span></h1>
+  <p class="hero-sub">Every tool, library, and resource you need — plus AI-powered guidance, a personalized quiz, and code explanations.</p>
+  <div class="hero-ctas">
+    <a href="#roadmap" class="btn btn-primary">🗺️ Roadmap</a>
+    <a href="#tools" class="btn btn-outline">🧰 Tools</a>
+    <a href="#quiz" class="btn btn-outline">🧠 Quiz</a>
+    <a href="#ai" class="btn btn-outline">✨ AI Tools</a>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">8</div><div class="stat-label">Roadmap Steps</div></div>
+  <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Tools & Libraries</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Color Themes</div></div>
+  <div class="stat"><div class="stat-num">AI</div><div class="stat-label">Powered Features</div></div>
+</div>
+
+<section id="roadmap">
+  <div class="container">
+    <div class="section-header"><h2>🗺️ Step-by-step roadmap</h2><span class="section-tag">click steps to track progress</span></div>
+    <div class="steps-list" id="steps-list"></div>
+  </div>
+</section>
+
+<section id="tools" style="background:var(--surface)">
+  <div class="container">
+    <div class="section-header"><h2>🧰 Tools & Libraries</h2><span class="section-tag" id="tools-count">30 tools</span></div>
+    <div class="search-bar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search tools, tags, categories..." oninput="renderCards()"/>
+    </div>
+    <div class="filter-tabs">
+      <button class="tab active" onclick="setFilter('all',this)">All</button>
+      <button class="tab" onclick="setFilter('design',this)">🎨 Design</button>
+      <button class="tab" onclick="setFilter('frontend',this)">⚛️ Frontend</button>
+      <button class="tab" onclick="setFilter('backend',this)">🟢 Backend</button>
+      <button class="tab" onclick="setFilter('database',this)">🗄️ Database</button>
+      <button class="tab" onclick="setFilter('deploy',this)">🚀 Deploy</button>
+      <button class="tab" onclick="setFilter('tools',this)">🛠️ Dev Tools</button>
+      <button class="tab" onclick="setFilter('saved',this)">❤️ Saved</button>
+    </div>
+    <div class="cards-grid" id="cards-list"></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="container">
+    <div class="section-header"><h2>🧠 What should I learn next?</h2><span class="section-tag">5 questions → personalized roadmap</span></div>
+    <div class="quiz-wrap">
+      <div class="quiz-prog" id="qprog"></div>
+      <div id="qbody"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ai" style="background:var(--surface)">
+  <div class="container">
+    <div class="section-header"><h2>✨ AI-Powered Tools</h2><span class="section-tag">powered by Claude</span></div>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <div class="ai-card-title">🔧 AI Tool Recommender</div>
+        <div class="ai-card-desc">Describe your project and get personalized tool & stack recommendations.</div>
+        <textarea class="ai-input" id="rec-in" placeholder="e.g. I want to build a real-time chat app for my college friends..."></textarea>
+        <button class="btn btn-primary btn-sm" onclick="runRecommender()">Get Recommendations →</button>
+        <div class="ai-loading" id="rec-load"><div class="spinner"></div>Thinking...</div>
+        <div class="ai-output" id="rec-out"></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-title">💡 AI Code Explainer</div>
+        <div class="ai-card-desc">Paste any code snippet and get a plain-English explanation.</div>
+        <textarea class="ai-input" id="exp-in" placeholder="Paste your code here...&#10;&#10;e.g. const [count, setCount] = useState(0);"></textarea>
+        <button class="btn btn-primary btn-sm" onclick="runExplainer()">Explain this Code →</button>
+        <div class="ai-loading" id="exp-load"><div class="spinner"></div>Analyzing...</div>
+        <div class="ai-output" id="exp-out"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cheatsheet">
+  <div class="container">
+    <div class="section-header"><h2>📋 Quick Cheatsheet</h2><span class="section-tag">click to copy</span></div>
+    <div class="cheat-grid" id="cheat-grid"></div>
+  </div>
+</section>
+
+<section id="resources" style="background:var(--surface)">
+  <div class="container">
+    <div class="section-header"><h2>📚 Learning Resources</h2><span class="section-tag">free & paid</span></div>
+    <div class="resources-grid" id="resources-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with ❤️ for developers · <a href="https://github.com" target="_blank">Star on GitHub</a> · Open Source</p>
+  <p style="margin-top:6px">WebDevHub v2.0 — Your complete guide to building websites</p>
+</footer>
+
+<div class="compare-float" id="cfloat">
+  <div class="compare-float-title">⚡ Compare <button class="btn-icon" onclick="clearCompare()" style="font-size:11px;width:24px;height:24px">✕</button></div>
+  <div class="compare-items" id="citems"></div>
+  <div class="compare-actions">
+    <button class="btn btn-primary btn-sm" onclick="openModal()">Compare →</button>
+    <button class="btn btn-outline btn-sm" onclick="clearCompare()">Clear</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cmodal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">⚡ Tool Comparison</div>
+      <div class="modal-close" onclick="closeModal()">✕</div>
+    </div>
+    <div class="compare-grid" id="cgrid"></div>
+  </div>
+</div>
+
+<script>
+const steps=[
+  {num:'01',title:'Plan & Design',desc:'Define your goal, audience, and sitemap. Wireframe before writing code. A good plan saves 10x the time.',tools:['Figma','Excalidraw','Notion','Miro']},
+  {num:'02',title:'Set up your environment',desc:'Install Node.js and VS Code. Init Git from day one — every professional project uses version control.',tools:['VS Code','Node.js','Git','npm / pnpm','GitHub']},
+  {num:'03',title:'Structure with HTML',desc:'Write semantic HTML. Use proper headings and landmark elements. Structure first, style later.',tools:['HTML5','Emmet','W3C Validator','MDN Docs']},
+  {num:'04',title:'Style with CSS',desc:'Learn Flexbox and Grid for layouts. Use CSS variables. Design mobile-first.',tools:['CSS3','Tailwind CSS','Flexbox','CSS Grid','Sass']},
+  {num:'05',title:'Add interactivity with JS',desc:'Handle events, fetch APIs, update the DOM. Pick React or Vue for complex UIs.',tools:['JavaScript','React','Vue.js','Next.js','TypeScript']},
+  {num:'06',title:'Build a backend & API',desc:'Build REST APIs to connect frontend to data. Handle auth and server-side logic.',tools:['Node.js','Express','FastAPI','Firebase','Supabase']},
+  {num:'07',title:'Connect a database',desc:'Store persistent data. SQL for structured data, NoSQL for flexibility.',tools:['PostgreSQL','MongoDB','Supabase','Prisma','Redis']},
+  {num:'08',title:'Test, optimize & deploy',desc:'Test for bugs, optimize Lighthouse scores, deploy, and set up a custom domain.',tools:['Jest','Playwright','Lighthouse','Vercel','Netlify']},
+];
+
+const tools=[
+  {icon:'🎨',name:'Figma',desc:'Industry-standard UI design & prototyping tool.',tags:['ui','prototyping'],cat:'design',url:'https://figma.com',bestFor:'Professional design',useCase:'UI design',free:true},
+  {icon:'✏️',name:'Excalidraw',desc:'Hand-drawn wireframing. Free, fast, great for quick sketches.',tags:['wireframe','free'],cat:'design',url:'https://excalidraw.com',bestFor:'Quick sketches',useCase:'Wireframing',free:true},
+  {icon:'🌈',name:'Coolors',desc:'Generate beautiful color palettes in seconds.',tags:['colors','palette'],cat:'design',url:'https://coolors.co',bestFor:'Color selection',useCase:'Palette generation',free:true},
+  {icon:'🔤',name:'Google Fonts',desc:'Free, open-source fonts for any website.',tags:['typography','free'],cat:'design',url:'https://fonts.google.com',bestFor:'Web fonts',useCase:'Typography',free:true},
+  {icon:'🖼️',name:'Unsplash',desc:'Beautiful free high-resolution stock photos.',tags:['images','free'],cat:'design',url:'https://unsplash.com',bestFor:'Free photos',useCase:'Stock images',free:true},
+  {icon:'🎭',name:'Dribbble',desc:'Inspiration from top designers worldwide.',tags:['inspiration'],cat:'design',url:'https://dribbble.com',bestFor:'Design ideas',useCase:'Inspiration',free:false},
+  {icon:'⚛️',name:'React',desc:'Most popular JS library for building interactive UIs.',tags:['javascript','library'],cat:'frontend',url:'https://react.dev',bestFor:'Complex UIs',useCase:'UI development',free:true},
+  {icon:'💚',name:'Vue.js',desc:'Progressive framework with a gentle learning curve.',tags:['javascript','framework'],cat:'frontend',url:'https://vuejs.org',bestFor:'Beginners & pros',useCase:'UI development',free:true},
+  {icon:'🔺',name:'Next.js',desc:'Full-stack React framework with SSR & API routes.',tags:['react','fullstack'],cat:'frontend',url:'https://nextjs.org',bestFor:'Production React',useCase:'Full-stack apps',free:true},
+  {icon:'🌊',name:'Tailwind CSS',desc:'Utility-first CSS. Build custom designs fast.',tags:['css','styling'],cat:'frontend',url:'https://tailwindcss.com',bestFor:'Custom designs',useCase:'Styling',free:true},
+  {icon:'🅱️',name:'Bootstrap',desc:'Classic CSS framework with ready-made components.',tags:['css','components'],cat:'frontend',url:'https://getbootstrap.com',bestFor:'Quick prototypes',useCase:'Styling',free:true},
+  {icon:'✨',name:'GSAP',desc:'Professional-grade animation library.',tags:['animation','js'],cat:'frontend',url:'https://gsap.com',bestFor:'Complex animations',useCase:'Animations',free:false},
+  {icon:'🟢',name:'Node.js',desc:'Run JavaScript on the server side.',tags:['runtime','js'],cat:'backend',url:'https://nodejs.org',bestFor:'JS backends',useCase:'Server runtime',free:true},
+  {icon:'🚂',name:'Express',desc:'Minimal Node.js web framework for REST APIs.',tags:['framework','api'],cat:'backend',url:'https://expressjs.com',bestFor:'Simple APIs',useCase:'REST APIs',free:true},
+  {icon:'🐍',name:'FastAPI',desc:'Fast Python API framework with auto docs.',tags:['python','api'],cat:'backend',url:'https://fastapi.tiangolo.com',bestFor:'Python APIs',useCase:'REST APIs',free:true},
+  {icon:'🔥',name:'Firebase',desc:'Google backend: auth, database, hosting in one.',tags:['google','auth'],cat:'backend',url:'https://firebase.google.com',bestFor:'Rapid development',useCase:'BaaS',free:false},
+  {icon:'🐘',name:'PostgreSQL',desc:'World\'s most advanced open source relational DB.',tags:['sql','relational'],cat:'database',url:'https://postgresql.org',bestFor:'Production SQL',useCase:'Relational data',free:true},
+  {icon:'🍃',name:'MongoDB',desc:'Flexible document-based NoSQL database.',tags:['nosql','documents'],cat:'database',url:'https://mongodb.com',bestFor:'Flexible schemas',useCase:'Document storage',free:false},
+  {icon:'⚡',name:'Supabase',desc:'Open source Firebase alternative. Postgres + Auth.',tags:['postgres','open-source'],cat:'database',url:'https://supabase.com',bestFor:'Full backend',useCase:'BaaS + DB',free:true},
+  {icon:'🔷',name:'Prisma',desc:'Modern type-safe ORM for Node.js.',tags:['orm','typescript'],cat:'database',url:'https://prisma.io',bestFor:'TypeScript projects',useCase:'Database ORM',free:true},
+  {icon:'⚡',name:'Redis',desc:'In-memory data store for caching & real-time.',tags:['cache','realtime'],cat:'database',url:'https://redis.io',bestFor:'Performance',useCase:'Caching',free:true},
+  {icon:'▲',name:'Vercel',desc:'Deploy frontend apps instantly. Best Next.js host.',tags:['hosting','ci/cd'],cat:'deploy',url:'https://vercel.com',bestFor:'Next.js apps',useCase:'Frontend hosting',free:true},
+  {icon:'🌐',name:'Netlify',desc:'Continuous deployment for static sites.',tags:['hosting','static'],cat:'deploy',url:'https://netlify.com',bestFor:'Static sites',useCase:'Static hosting',free:true},
+  {icon:'🛤️',name:'Railway',desc:'Deploy backends & databases with zero config.',tags:['hosting','backend'],cat:'deploy',url:'https://railway.app',bestFor:'Backend apps',useCase:'Full-stack hosting',free:false},
+  {icon:'☁️',name:'Cloudflare',desc:'CDN, DNS, and edge hosting for fast sites.',tags:['cdn','dns'],cat:'deploy',url:'https://cloudflare.com',bestFor:'Performance',useCase:'CDN & DNS',free:true},
+  {icon:'🛠️',name:'VS Code',desc:'Most popular code editor. Highly extensible.',tags:['editor','free'],cat:'tools',url:'https://code.visualstudio.com',bestFor:'All developers',useCase:'Code editing',free:true},
+  {icon:'🐙',name:'GitHub',desc:'Host code, collaborate, track versions.',tags:['git','collaboration'],cat:'tools',url:'https://github.com',bestFor:'All projects',useCase:'Version control',free:true},
+  {icon:'🃏',name:'Jest',desc:'Delightful JavaScript testing framework.',tags:['testing','js'],cat:'tools',url:'https://jestjs.io',bestFor:'JS testing',useCase:'Unit testing',free:true},
+  {icon:'🎭',name:'Playwright',desc:'E2E browser testing across all browsers.',tags:['testing','e2e'],cat:'tools',url:'https://playwright.dev',bestFor:'Browser testing',useCase:'E2E testing',free:true},
+  {icon:'📦',name:'Vite',desc:'Lightning-fast build tool and dev server.',tags:['build','fast'],cat:'tools',url:'https://vitejs.dev',bestFor:'Fast development',useCase:'Build tooling',free:true},
+];
+
+const cheats=[
+  {title:'HTML Boilerplate',dot:'var(--accent)',code:`&lt;!-- index.html --&gt;\n&lt;!DOCTYPE html&gt;\n&lt;html lang="en"&gt;\n&lt;head&gt;\n  &lt;meta charset="UTF-8"/&gt;\n  &lt;meta name="viewport" content="width=device-width"/&gt;\n  &lt;title&gt;My Website&lt;/title&gt;\n  &lt;link rel="stylesheet" href="style.css"/&gt;\n&lt;/head&gt;\n&lt;body&gt;\n  &lt;!-- content --&gt;\n  &lt;script src="main.js"&gt;&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;`,raw:`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8"/>\n  <meta name="viewport" content="width=device-width"/>\n  <title>My Website</title>\n  <link rel="stylesheet" href="style.css"/>\n</head>\n<body>\n  <!-- content -->\n  <script src="main.js"><\/script>\n<\/body>\n<\/html>`},
+  {title:'CSS Flexbox & Grid',dot:'var(--accent2)',code:`<span class="cm">/* Center anything */</span>\n.<span class="fn">center</span> {\n  <span class="kw">display</span>: flex;\n  <span class="kw">justify-content</span>: center;\n  <span class="kw">align-items</span>: center;\n  <span class="kw">gap</span>: 1rem;\n}\n<span class="cm">/* Responsive grid */</span>\n.<span class="fn">grid</span> {\n  <span class="kw">display</span>: grid;\n  <span class="kw">grid-template-columns</span>:\n    repeat(auto-fill, minmax(<span class="str">250px</span>, 1fr));\n  <span class="kw">gap</span>: 1rem;\n}`,raw:`.center { display:flex; justify-content:center; align-items:center; gap:1rem; }\n.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1rem; }`},
+  {title:'React Component',dot:'var(--accent3)',code:`<span class="kw">import</span> { <span class="fn">useState</span> } <span class="kw">from</span> <span class="str">'react'</span>;\n\n<span class="kw">export default function</span> <span class="fn">Button</span>({ label }) {\n  <span class="kw">const</span> [clicked, setClicked] = <span class="fn">useState</span>(<span class="kw">false</span>);\n  <span class="kw">return</span> (\n    &lt;<span class="fn">button</span> onClick={() =&gt; <span class="fn">setClicked</span>(<span class="kw">true</span>)}&gt;\n      {clicked ? <span class="str">'Done!'</span> : label}\n    &lt;/<span class="fn">button</span>&gt;\n  );\n}`,raw:`import { useState } from 'react';\nexport default function Button({ label }) {\n  const [clicked, setClicked] = useState(false);\n  return <button onClick={() => setClicked(true)}>{clicked ? 'Done!' : label}</button>;\n}`},
+  {title:'Git Commands',dot:'#f97316',code:`<span class="cm"># Start project</span>\n<span class="fn">git</span> init && <span class="fn">git</span> add . && <span class="fn">git</span> commit <span class="kw">-m</span> <span class="str">"init"</span>\n\n<span class="cm"># Push to GitHub</span>\n<span class="fn">git</span> remote add origin &lt;url&gt;\n<span class="fn">git</span> push <span class="kw">-u</span> origin main\n\n<span class="cm"># Daily workflow</span>\n<span class="fn">git</span> pull\n<span class="fn">git</span> add . && <span class="fn">git</span> commit <span class="kw">-m</span> <span class="str">"feat: ..."</span>\n<span class="fn">git</span> push`,raw:`git init && git add . && git commit -m "init"\ngit remote add origin <url>\ngit push -u origin main\n\n# Daily\ngit pull\ngit add . && git commit -m "feat: ..."\ngit push`},
+  {title:'Node.js Express',dot:'var(--accent2)',code:`<span class="kw">const</span> express = <span class="fn">require</span>(<span class="str">'express'</span>);\n<span class="kw">const</span> app = <span class="fn">express</span>();\napp.<span class="fn">use</span>(express.<span class="fn">json</span>());\n\napp.<span class="fn">get</span>(<span class="str">'/api/hello'</span>, (req, res) =&gt; {\n  res.<span class="fn">json</span>({ message: <span class="str">'Hello!'</span> });\n});\n\napp.<span class="fn">listen</span>(<span class="str">3000</span>, () =&gt;\n  console.<span class="fn">log</span>(<span class="str">'Running on :3000'</span>)\n);`,raw:`const express = require('express');\nconst app = express();\napp.use(express.json());\napp.get('/api/hello', (req, res) => res.json({ message: 'Hello!' }));\napp.listen(3000, () => console.log('Running on :3000'));`},
+  {title:'Tailwind CSS',dot:'#a855f7',code:`<span class="cm">&lt;!-- Tailwind classes --&gt;</span>\n<span class="kw">&lt;div</span> class=<span class="str">"flex items-center gap-4\n  p-6 rounded-2xl bg-white\n  shadow-lg hover:shadow-xl\n  transition-all duration-200"</span><span class="kw">&gt;</span>\n  <span class="kw">&lt;h2</span> class=<span class="str">"text-xl font-bold"</span><span class="kw">&gt;</span>Hello!<span class="kw">&lt;/h2&gt;</span>\n  <span class="kw">&lt;button</span> class=<span class="str">"bg-violet-600\n    text-white px-4 py-2 rounded-xl\n    hover:bg-violet-700"</span><span class="kw">&gt;</span>Click<span class="kw">&lt;/button&gt;\n&lt;/div&gt;</span>`,raw:`<div class="flex items-center gap-4 p-6 rounded-2xl bg-white shadow-lg">\n  <h2 class="text-xl font-bold">Hello!<\/h2>\n  <button class="bg-violet-600 text-white px-4 py-2 rounded-xl">Click<\/button>\n<\/div>`},
+];
+
+const resources=[
+  {icon:'📖',name:'MDN Web Docs',desc:'The definitive reference for HTML, CSS, and JS.',url:'https://developer.mozilla.org'},
+  {icon:'🎓',name:'freeCodeCamp',desc:'Free self-paced web dev curriculum with certifications.',url:'https://freecodecamp.org'},
+  {icon:'🎥',name:'Fireship.io',desc:'Fast-paced, high-quality dev tutorials.',url:'https://fireship.io'},
+  {icon:'💻',name:'The Odin Project',desc:'Free open-source full-stack curriculum.',url:'https://theodinproject.com'},
+  {icon:'🏆',name:'Frontend Mentor',desc:'Real-world challenges with professional designs.',url:'https://frontendmentor.io'},
+  {icon:'📺',name:'Traversy Media',desc:'YouTube channel covering HTML to React and beyond.',url:'https://youtube.com/@TraversyMedia'},
+  {icon:'🧪',name:'CodePen',desc:'Browser-based playground for HTML/CSS/JS.',url:'https://codepen.io'},
+  {icon:'📚',name:'CSS-Tricks',desc:'Articles and guides for all things CSS.',url:'https://css-tricks.com'},
+];
+
+const quizQs=[
+  {q:'What is your current skill level?',opts:['Complete beginner','Know some HTML/CSS','Can build basic websites','Comfortable with JS','Know a JS framework']},
+  {q:'What kind of website do you want to build?',opts:['Personal portfolio or blog','Business or landing page','Web app with user accounts','E-commerce store','Not sure yet']},
+  {q:'How much time can you invest per week?',opts:['Less than 5 hours','5–10 hours','10–20 hours','20+ hours (full-time)']},
+  {q:'Which area interests you most?',opts:['Design & making things beautiful','Frontend — interactive UIs','Backend — logic & APIs','Databases & data','All of it — full-stack!']},
+  {q:'What is your main goal?',opts:['Get a developer job','Build my own product','Freelance for clients','Learn for personal growth','Build tools for my job']},
+];
+
+const catColors={design:{bg:'rgba(168,85,247,0.12)',color:'#a855f7'},frontend:{bg:'rgba(59,130,246,0.12)',color:'#60a5fa'},backend:{bg:'rgba(34,197,94,0.12)',color:'#4ade80'},database:{bg:'rgba(245,158,11,0.12)',color:'#fbbf24'},deploy:{bg:'rgba(239,68,68,0.12)',color:'#f87171'},tools:{bg:'rgba(78,205,196,0.12)',color:'#4ecdc4'}};
+
+let activeFilter='all', saved=JSON.parse(localStorage.getItem('wdh-saved')||'[]'), done=JSON.parse(localStorage.getItem('wdh-done')||'[]'), compare=[], qAnswers=[], qCurrent=0;
+
+// THEME
+function setTheme(t,el){
+  document.body.className=t==='dark'?'':'theme-'+t;
+  document.querySelectorAll('.theme-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+  localStorage.setItem('wdh-theme',t);
+}
+(()=>{const t=localStorage.getItem('wdh-theme')||'dark';if(t!=='dark'){document.body.className='theme-'+t;const map={light:1,sepia:2,ocean:3,forest:4};const dots=document.querySelectorAll('.theme-dot');if(dots[map[t]]){dots[0].classList.remove('active');dots[map[t]].classList.add('active');}}})();
+
+// PROGRESS
+function updateProgress(){const p=Math.round(done.length/steps.length*100);document.getElementById('pfill').style.width=p+'%';document.getElementById('ppct').textContent=p+'%';}
+
+// ROADMAP
+function renderSteps(){
+  document.getElementById('steps-list').innerHTML=steps.map((s,i)=>`
+    ${i>0?'<div class="step-connector"></div>':''}
+    <div class="step${done.includes(i)?' done':''}" onclick="toggleStep(${i})">
+      <div class="step-num">${done.includes(i)?'✓':s.num}</div>
+      <div class="step-content">
+        <div class="step-title">${s.title}</div>
+        <div class="step-desc">${s.desc}</div>
+        <div class="step-tools">${s.tools.map(t=>`<span class="step-tool">${t}</span>`).join('')}</div>
+        <div class="step-hint">${done.includes(i)?'✓ Done! Click to undo.':'Click to mark as done'}</div>
+      </div>
+    </div>`).join('');
+}
+function toggleStep(i){
+  if(done.includes(i))done=done.filter(x=>x!==i);else done.push(i);
+  localStorage.setItem('wdh-done',JSON.stringify(done));
+  renderSteps();updateProgress();
+  if(done.length===steps.length)setTimeout(()=>alert('🎉 Roadmap complete! Time to ship something amazing!'),200);
+}
+
+// SAVED
+function toggleSave(name,e){
+  e.stopPropagation();
+  if(saved.includes(name))saved=saved.filter(x=>x!==name);else saved.push(name);
+  localStorage.setItem('wdh-saved',JSON.stringify(saved));
+  renderCards();renderSavedBar();
+}
+function clearSaved(){saved=[];localStorage.setItem('wdh-saved','[]');if(activeFilter==='saved')setFilter('all',document.querySelector('.tab'));else{renderCards();renderSavedBar();}}
+function renderSavedBar(){
+  const bar=document.getElementById('saved-bar'),pills=document.getElementById('saved-pills');
+  if(!saved.length){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  pills.innerHTML=saved.map(n=>`<span class="saved-pill">${n}<button onclick="toggleSave('${n}',event)">✕</button></span>`).join('');
+}
+
+// COMPARE
+function toggleCompare(name,e){
+  e.stopPropagation();
+  if(compare.includes(name))compare=compare.filter(x=>x!==name);
+  else if(compare.length<3)compare.push(name);
+  else{alert('Max 3 tools to compare.');return;}
+  renderCards();updateCompareFloat();
+}
+function updateCompareFloat(){
+  const f=document.getElementById('cfloat'),ci=document.getElementById('citems');
+  if(!compare.length){f.classList.remove('visible');return;}
+  f.classList.add('visible');
+  ci.innerHTML=compare.map(n=>`<div class="compare-item">${n}</div>`).join('');
+}
+function clearCompare(){compare=[];renderCards();updateCompareFloat();}
+function openModal(){
+  if(compare.length<2){alert('Select at least 2 tools.');return;}
+  const items=compare.map(n=>tools.find(t=>t.name===n)).filter(Boolean);
+  document.getElementById('cgrid').innerHTML=items.map(t=>{
+    const c=catColors[t.cat]||catColors.tools;
+    return`<div class="compare-col">
+      <div class="compare-col-head"><div style="font-size:24px">${t.icon}</div><div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px">${t.name}</div><span class="card-cat-badge" style="background:${c.bg};color:${c.color}">${t.cat}</span></div></div>
+      <div class="compare-col-body">
+        <div><div class="cmp-label">Description</div><div class="cmp-val">${t.desc}</div></div>
+        <div><div class="cmp-label">Best For</div><div class="cmp-val">${t.bestFor}</div></div>
+        <div><div class="cmp-label">Use Case</div><div class="cmp-val">${t.useCase}</div></div>
+        <div><div class="cmp-label">Free?</div><div class="cmp-val">${t.free?'✅ Free tier':'💳 Paid/freemium'}</div></div>
+        <div><div class="cmp-label">Tags</div><div class="cmp-val">${t.tags.join(', ')}</div></div>
+        <div style="padding-top:8px"><a class="card-link" href="${t.url}" target="_blank">Visit ↗</a></div>
+      </div></div>`;
+  }).join('');
+  document.getElementById('cmodal').classList.add('open');
+}
+function closeModal(){document.getElementById('cmodal').classList.remove('open');}
+
+// CARDS
+function renderCards(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const filtered=tools.filter(t=>{
+    if(activeFilter==='saved')return saved.includes(t.name);
+    return(activeFilter==='all'||t.cat===activeFilter)&&(!q||t.name.toLowerCase().includes(q)||t.desc.toLowerCase().includes(q)||t.tags.some(tg=>tg.includes(q)));
+  });
+  document.getElementById('tools-count').textContent=filtered.length+' tools';
+  document.getElementById('cards-list').innerHTML=filtered.length
+    ?filtered.map(t=>{
+      const c=catColors[t.cat]||catColors.tools,isSaved=saved.includes(t.name),inCmp=compare.includes(t.name),ci=compare.indexOf(t.name);
+      return`<div class="card${isSaved?' saved-card':''}${inCmp?' in-compare':''}">
+        ${inCmp?`<div class="compare-num">#${ci+1}</div>`:''}
+        <div class="card-actions">
+          <div class="btn-icon${isSaved?' on':''}" onclick="toggleSave('${t.name}',event)" title="Save">${isSaved?'❤️':'🤍'}</div>
+          <div class="btn-icon${inCmp?' on':''}" onclick="toggleCompare('${t.name}',event)" title="Compare">⚡</div>
+        </div>
+        <div class="card-icon">${t.icon}</div>
+        <div class="card-name">${t.name}</div>
+        <div class="card-desc">${t.desc}</div>
+        <div class="card-tags">${t.tags.map(tg=>`<span class="tag">${tg}</span>`).join('')}</div>
+        <div class="card-footer">
+          <a class="card-link" href="${t.url}" target="_blank">Visit ↗</a>
+          <span class="card-cat-badge" style="background:${c.bg};color:${c.color}">${t.cat}</span>
+        </div></div>`;
+    }).join('')
+    :`<div class="no-results"><span>${activeFilter==='saved'?'💔':'🔍'}</span>${activeFilter==='saved'?'No saved tools yet.<br><small>Click ❤️ on any tool!</small>':`No results for "${q||activeFilter}"`}</div>`;
+}
+function setFilter(cat,el){activeFilter=cat;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderCards();}
+
+// QUIZ
+function renderQuiz(){
+  document.getElementById('qprog').innerHTML=quizQs.map((_,i)=>`<div class="quiz-dot${i<qCurrent?' done':i===qCurrent?' cur':''}"></div>`).join('');
+  const body=document.getElementById('qbody');
+  if(qCurrent>=quizQs.length){body.innerHTML=buildResult();return;}
+  const q=quizQs[qCurrent];
+  body.innerHTML=`
+    <div class="quiz-q">Q${qCurrent+1}/${quizQs.length}: ${q.q}</div>
+    <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt${qAnswers[qCurrent]===i?' sel':''}" onclick="selectQ(${i})">${o}</button>`).join('')}</div>
+    <div style="display:flex;gap:10px;margin-top:1.25rem">
+      ${qCurrent>0?'<button class="btn btn-outline btn-sm" onclick="qBack()">← Back</button>':''}
+      ${qAnswers[qCurrent]!==undefined?`<button class="btn btn-primary btn-sm" onclick="qNext()">${qCurrent===quizQs.length-1?'See roadmap →':'Next →'}</button>`:''}
+    </div>`;
+}
+function selectQ(i){qAnswers[qCurrent]=i;renderQuiz();}
+function qNext(){qCurrent++;renderQuiz();}
+function qBack(){qCurrent--;renderQuiz();}
+function buildResult(){
+  const skill=qAnswers[0]||0,interest=qAnswers[3]||4;
+  let profile,desc,road;
+  if(skill<=1){profile='🌱 Beginner — Start with the Fundamentals';desc='Focus on HTML, CSS, and vanilla JS first. Build small projects before any framework. Consistency beats intensity!';road=['Master HTML semantics (2 weeks)','CSS: Flexbox, Grid, responsive design (3 weeks)','JavaScript: DOM, events, fetch API (4 weeks)','Build 3 projects: portfolio, todo, weather app','Pick Vue.js — it has a gentle learning curve'];}
+  else if(interest===0||interest===1){profile='🎨 Frontend Developer';desc='Level up with a framework and build polished UIs. Focus on component-driven development and responsive design.';road=['React or Vue.js deep dive (3-4 weeks)','Tailwind CSS for rapid UI development','State management: useState, useEffect, Context API','Build a full project: blog, dashboard, or app clone','Deploy to Vercel — set up CI/CD'];}
+  else if(interest===2){profile='⚙️ Backend Developer';desc='You\'re drawn to the server side. Learn Node.js, build REST APIs, and connect to a database.';road=['Node.js & Express: routing, middleware, APIs','PostgreSQL: queries, joins, indexes','Authentication: JWT tokens and bcrypt','Build a REST API with full CRUD operations','Deploy to Railway or Render'];}
+  else{profile='🔥 Full-Stack Developer';desc='You want to build it all. Next.js + Supabase is a powerful modern stack for one developer.';road=['React fundamentals + hooks (2 weeks)','Next.js: pages, routing, API routes, SSR','Supabase: auth, database, real-time','Tailwind CSS for styling','Build and deploy a complete full-stack app'];}
+  return`<div>
+    <div class="quiz-result-title">${profile}</div>
+    <div class="quiz-result-desc">${desc}</div>
+    <div class="quiz-roadmap">${road.map((r,i)=>`<div class="quiz-step"><div class="quiz-step-num">0${i+1}</div><div class="quiz-step-text">${r}</div></div>`).join('')}</div>
+    <button class="btn btn-outline btn-sm" onclick="restartQuiz()" style="margin-top:1.25rem">↩ Retake quiz</button>
+  </div>`;
+}
+function restartQuiz(){qAnswers=[];qCurrent=0;renderQuiz();}
+
+// CHEATSHEET
+function renderCheats(){
+  document.getElementById('cheat-grid').innerHTML=cheats.map((c,i)=>`
+    <div class="cheat-card">
+      <div class="cheat-header">
+        <div class="cheat-head-left"><div class="cheat-dot" style="background:${c.dot}"></div>${c.title}</div>
+        <button class="copy-btn" id="cb${i}" onclick="copyCode(${i})">Copy</button>
+      </div>
+      <pre>${c.code}</pre>
+    </div>`).join('');
+}
+function copyCode(i){
+  navigator.clipboard.writeText(cheats[i].raw).then(()=>{
+    const b=document.getElementById('cb'+i);b.textContent='Copied!';b.classList.add('ok');
+    setTimeout(()=>{b.textContent='Copy';b.classList.remove('ok');},2000);
+  });
+}
+
+// RESOURCES
+function renderResources(){
+  document.getElementById('resources-grid').innerHTML=resources.map(r=>`
+    <a class="resource-card" href="${r.url}" target="_blank">
+      <div class="resource-icon">${r.icon}</div>
+      <div><div class="resource-name">${r.name}</div><div class="resource-desc">${r.desc}</div></div>
+    </a>`).join('');
+}
+
+// AI
+async function runRecommender(){
+  const inp=document.getElementById('rec-in').value.trim();
+  if(!inp){alert('Please describe your project!');return;}
+  const out=document.getElementById('rec-out'),load=document.getElementById('rec-load');
+  out.classList.remove('show');load.classList.add('show');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are a helpful web dev advisor. Given a project idea, recommend the best tools and tech stack. Be concise, practical, beginner-friendly. Use emoji bullets. Max 250 words.',messages:[{role:'user',content:`I want to build: ${inp}\n\nWhat tools and tech stack should I use?`}]})});
+    const d=await r.json();
+    out.textContent=d.content?.[0]?.text||'No response received.';
+  }catch(e){out.textContent='⚠️ Could not connect to AI. Please try again.';}
+  load.classList.remove('show');out.classList.add('show');
+}
+
+async function runExplainer(){
+  const inp=document.getElementById('exp-in').value.trim();
+  if(!inp){alert('Please paste some code!');return;}
+  const out=document.getElementById('exp-out'),load=document.getElementById('exp-load');
+  out.classList.remove('show');load.classList.add('show');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are a patient coding teacher. Explain code in simple plain English. Assume the reader is a beginner. Use friendly tone, short sentences. Max 200 words.',messages:[{role:'user',content:`Explain this code in plain English:\n\n${inp}`}]})});
+    const d=await r.json();
+    out.textContent=d.content?.[0]?.text||'No response received.';
+  }catch(e){out.textContent='⚠️ Could not connect to AI. Please try again.';}
+  load.classList.remove('show');out.classList.add('show');
+}
+
+// INIT
+renderSteps();updateProgress();renderCards();renderSavedBar();renderCheats();renderResources();renderQuiz();
+</script>
+</body>
+</html>
