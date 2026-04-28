@@ -97,6 +97,11 @@
     .card-cat-badge{font-size:10px;font-family:'DM Mono',monospace;border-radius:4px;padding:2px 7px}
     .no-results{grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:14px}
     .no-results span{font-size:2rem;display:block;margin-bottom:8px}
+    .pricing-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-family:"DM Mono",monospace;border-radius:5px;padding:3px 8px;border:1px solid transparent;font-weight:500}
+    .pricing-free{background:rgba(74,222,128,0.12);color:#4ade80;border-color:rgba(74,222,128,0.25)}
+    .pricing-freemium{background:rgba(251,191,36,0.12);color:#fbbf24;border-color:rgba(251,191,36,0.25)}
+    .pricing-paid{background:rgba(248,113,113,0.12);color:#f87171;border-color:rgba(248,113,113,0.25)}
+    .pricing-open-source{background:rgba(56,189,248,0.12);color:#38bdf8;border-color:rgba(56,189,248,0.25)}
     .steps-list{display:flex;flex-direction:column;gap:1rem}
     .step{display:flex;gap:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;transition:all .2s;cursor:pointer;user-select:none}
     .step:hover{border-color:var(--border-hover)}
@@ -351,36 +356,36 @@ const steps=[
 ];
 
 const tools=[
-  {icon:'🎨',name:'Figma',desc:'Industry-standard UI design & prototyping tool.',tags:['ui','prototyping'],cat:'design',url:'https://figma.com',bestFor:'Professional design',useCase:'UI design',free:true},
-  {icon:'✏️',name:'Excalidraw',desc:'Hand-drawn wireframing. Free, fast, great for quick sketches.',tags:['wireframe','free'],cat:'design',url:'https://excalidraw.com',bestFor:'Quick sketches',useCase:'Wireframing',free:true},
-  {icon:'🌈',name:'Coolors',desc:'Generate beautiful color palettes in seconds.',tags:['colors','palette'],cat:'design',url:'https://coolors.co',bestFor:'Color selection',useCase:'Palette generation',free:true},
-  {icon:'🔤',name:'Google Fonts',desc:'Free, open-source fonts for any website.',tags:['typography','free'],cat:'design',url:'https://fonts.google.com',bestFor:'Web fonts',useCase:'Typography',free:true},
-  {icon:'🖼️',name:'Unsplash',desc:'Beautiful free high-resolution stock photos.',tags:['images','free'],cat:'design',url:'https://unsplash.com',bestFor:'Free photos',useCase:'Stock images',free:true},
-  {icon:'🎭',name:'Dribbble',desc:'Inspiration from top designers worldwide.',tags:['inspiration'],cat:'design',url:'https://dribbble.com',bestFor:'Design ideas',useCase:'Inspiration',free:false},
-  {icon:'⚛️',name:'React',desc:'Most popular JS library for building interactive UIs.',tags:['javascript','library'],cat:'frontend',url:'https://react.dev',bestFor:'Complex UIs',useCase:'UI development',free:true},
-  {icon:'💚',name:'Vue.js',desc:'Progressive framework with a gentle learning curve.',tags:['javascript','framework'],cat:'frontend',url:'https://vuejs.org',bestFor:'Beginners & pros',useCase:'UI development',free:true},
-  {icon:'🔺',name:'Next.js',desc:'Full-stack React framework with SSR & API routes.',tags:['react','fullstack'],cat:'frontend',url:'https://nextjs.org',bestFor:'Production React',useCase:'Full-stack apps',free:true},
-  {icon:'🌊',name:'Tailwind CSS',desc:'Utility-first CSS. Build custom designs fast.',tags:['css','styling'],cat:'frontend',url:'https://tailwindcss.com',bestFor:'Custom designs',useCase:'Styling',free:true},
-  {icon:'🅱️',name:'Bootstrap',desc:'Classic CSS framework with ready-made components.',tags:['css','components'],cat:'frontend',url:'https://getbootstrap.com',bestFor:'Quick prototypes',useCase:'Styling',free:true},
-  {icon:'✨',name:'GSAP',desc:'Professional-grade animation library.',tags:['animation','js'],cat:'frontend',url:'https://gsap.com',bestFor:'Complex animations',useCase:'Animations',free:false},
-  {icon:'🟢',name:'Node.js',desc:'Run JavaScript on the server side.',tags:['runtime','js'],cat:'backend',url:'https://nodejs.org',bestFor:'JS backends',useCase:'Server runtime',free:true},
-  {icon:'🚂',name:'Express',desc:'Minimal Node.js web framework for REST APIs.',tags:['framework','api'],cat:'backend',url:'https://expressjs.com',bestFor:'Simple APIs',useCase:'REST APIs',free:true},
-  {icon:'🐍',name:'FastAPI',desc:'Fast Python API framework with auto docs.',tags:['python','api'],cat:'backend',url:'https://fastapi.tiangolo.com',bestFor:'Python APIs',useCase:'REST APIs',free:true},
-  {icon:'🔥',name:'Firebase',desc:'Google backend: auth, database, hosting in one.',tags:['google','auth'],cat:'backend',url:'https://firebase.google.com',bestFor:'Rapid development',useCase:'BaaS',free:false},
-  {icon:'🐘',name:'PostgreSQL',desc:'World\'s most advanced open source relational DB.',tags:['sql','relational'],cat:'database',url:'https://postgresql.org',bestFor:'Production SQL',useCase:'Relational data',free:true},
-  {icon:'🍃',name:'MongoDB',desc:'Flexible document-based NoSQL database.',tags:['nosql','documents'],cat:'database',url:'https://mongodb.com',bestFor:'Flexible schemas',useCase:'Document storage',free:false},
-  {icon:'⚡',name:'Supabase',desc:'Open source Firebase alternative. Postgres + Auth.',tags:['postgres','open-source'],cat:'database',url:'https://supabase.com',bestFor:'Full backend',useCase:'BaaS + DB',free:true},
-  {icon:'🔷',name:'Prisma',desc:'Modern type-safe ORM for Node.js.',tags:['orm','typescript'],cat:'database',url:'https://prisma.io',bestFor:'TypeScript projects',useCase:'Database ORM',free:true},
-  {icon:'⚡',name:'Redis',desc:'In-memory data store for caching & real-time.',tags:['cache','realtime'],cat:'database',url:'https://redis.io',bestFor:'Performance',useCase:'Caching',free:true},
-  {icon:'▲',name:'Vercel',desc:'Deploy frontend apps instantly. Best Next.js host.',tags:['hosting','ci/cd'],cat:'deploy',url:'https://vercel.com',bestFor:'Next.js apps',useCase:'Frontend hosting',free:true},
-  {icon:'🌐',name:'Netlify',desc:'Continuous deployment for static sites.',tags:['hosting','static'],cat:'deploy',url:'https://netlify.com',bestFor:'Static sites',useCase:'Static hosting',free:true},
-  {icon:'🛤️',name:'Railway',desc:'Deploy backends & databases with zero config.',tags:['hosting','backend'],cat:'deploy',url:'https://railway.app',bestFor:'Backend apps',useCase:'Full-stack hosting',free:false},
-  {icon:'☁️',name:'Cloudflare',desc:'CDN, DNS, and edge hosting for fast sites.',tags:['cdn','dns'],cat:'deploy',url:'https://cloudflare.com',bestFor:'Performance',useCase:'CDN & DNS',free:true},
-  {icon:'🛠️',name:'VS Code',desc:'Most popular code editor. Highly extensible.',tags:['editor','free'],cat:'tools',url:'https://code.visualstudio.com',bestFor:'All developers',useCase:'Code editing',free:true},
-  {icon:'🐙',name:'GitHub',desc:'Host code, collaborate, track versions.',tags:['git','collaboration'],cat:'tools',url:'https://github.com',bestFor:'All projects',useCase:'Version control',free:true},
-  {icon:'🃏',name:'Jest',desc:'Delightful JavaScript testing framework.',tags:['testing','js'],cat:'tools',url:'https://jestjs.io',bestFor:'JS testing',useCase:'Unit testing',free:true},
-  {icon:'🎭',name:'Playwright',desc:'E2E browser testing across all browsers.',tags:['testing','e2e'],cat:'tools',url:'https://playwright.dev',bestFor:'Browser testing',useCase:'E2E testing',free:true},
-  {icon:'📦',name:'Vite',desc:'Lightning-fast build tool and dev server.',tags:['build','fast'],cat:'tools',url:'https://vitejs.dev',bestFor:'Fast development',useCase:'Build tooling',free:true},
+  {icon:'🎨',name:'Figma',desc:'Industry-standard UI design & prototyping tool.',tags:['ui','prototyping'],cat:'design',url:'https://figma.com',bestFor:'Professional design',useCase:'UI design',pricing:'freemium'},
+  {icon:'✏️',name:'Excalidraw',desc:'Hand-drawn wireframing. Free, fast, great for quick sketches.',tags:['wireframe','free'],cat:'design',url:'https://excalidraw.com',bestFor:'Quick sketches',useCase:'Wireframing',pricing:'open-source'},
+  {icon:'🌈',name:'Coolors',desc:'Generate beautiful color palettes in seconds.',tags:['colors','palette'],cat:'design',url:'https://coolors.co',bestFor:'Color selection',useCase:'Palette generation',pricing:'freemium'},
+  {icon:'🔤',name:'Google Fonts',desc:'Free, open-source fonts for any website.',tags:['typography','free'],cat:'design',url:'https://fonts.google.com',bestFor:'Web fonts',useCase:'Typography',pricing:'open-source'},
+  {icon:'🖼️',name:'Unsplash',desc:'Beautiful free high-resolution stock photos.',tags:['images','free'],cat:'design',url:'https://unsplash.com',bestFor:'Free photos',useCase:'Stock images',pricing:'free'},
+  {icon:'🎭',name:'Dribbble',desc:'Inspiration from top designers worldwide.',tags:['inspiration'],cat:'design',url:'https://dribbble.com',bestFor:'Design ideas',useCase:'Inspiration',pricing:'freemium'},
+  {icon:'⚛️',name:'React',desc:'Most popular JS library for building interactive UIs.',tags:['javascript','library'],cat:'frontend',url:'https://react.dev',bestFor:'Complex UIs',useCase:'UI development',pricing:'open-source'},
+  {icon:'💚',name:'Vue.js',desc:'Progressive framework with a gentle learning curve.',tags:['javascript','framework'],cat:'frontend',url:'https://vuejs.org',bestFor:'Beginners & pros',useCase:'UI development',pricing:'open-source'},
+  {icon:'🔺',name:'Next.js',desc:'Full-stack React framework with SSR & API routes.',tags:['react','fullstack'],cat:'frontend',url:'https://nextjs.org',bestFor:'Production React',useCase:'Full-stack apps',pricing:'open-source'},
+  {icon:'🌊',name:'Tailwind CSS',desc:'Utility-first CSS. Build custom designs fast.',tags:['css','styling'],cat:'frontend',url:'https://tailwindcss.com',bestFor:'Custom designs',useCase:'Styling',pricing:'open-source'},
+  {icon:'🅱️',name:'Bootstrap',desc:'Classic CSS framework with ready-made components.',tags:['css','components'],cat:'frontend',url:'https://getbootstrap.com',bestFor:'Quick prototypes',useCase:'Styling',pricing:'open-source'},
+  {icon:'✨',name:'GSAP',desc:'Professional-grade animation library.',tags:['animation','js'],cat:'frontend',url:'https://gsap.com',bestFor:'Complex animations',useCase:'Animations',pricing:'freemium'},
+  {icon:'🟢',name:'Node.js',desc:'Run JavaScript on the server side.',tags:['runtime','js'],cat:'backend',url:'https://nodejs.org',bestFor:'JS backends',useCase:'Server runtime',pricing:'open-source'},
+  {icon:'🚂',name:'Express',desc:'Minimal Node.js web framework for REST APIs.',tags:['framework','api'],cat:'backend',url:'https://expressjs.com',bestFor:'Simple APIs',useCase:'REST APIs',pricing:'open-source'},
+  {icon:'🐍',name:'FastAPI',desc:'Fast Python API framework with auto docs.',tags:['python','api'],cat:'backend',url:'https://fastapi.tiangolo.com',bestFor:'Python APIs',useCase:'REST APIs',pricing:'open-source'},
+  {icon:'🔥',name:'Firebase',desc:'Google backend: auth, database, hosting in one.',tags:['google','auth'],cat:'backend',url:'https://firebase.google.com',bestFor:'Rapid development',useCase:'BaaS',pricing:'freemium'},
+  {icon:'🐘',name:'PostgreSQL',desc:'World\'s most advanced open source relational DB.',tags:['sql','relational'],cat:'database',url:'https://postgresql.org',bestFor:'Production SQL',useCase:'Relational data',pricing:'open-source'},
+  {icon:'🍃',name:'MongoDB',desc:'Flexible document-based NoSQL database.',tags:['nosql','documents'],cat:'database',url:'https://mongodb.com',bestFor:'Flexible schemas',useCase:'Document storage',pricing:'freemium'},
+  {icon:'⚡',name:'Supabase',desc:'Open source Firebase alternative. Postgres + Auth.',tags:['postgres','open-source'],cat:'database',url:'https://supabase.com',bestFor:'Full backend',useCase:'BaaS + DB',pricing:'open-source'},
+  {icon:'🔷',name:'Prisma',desc:'Modern type-safe ORM for Node.js.',tags:['orm','typescript'],cat:'database',url:'https://prisma.io',bestFor:'TypeScript projects',useCase:'Database ORM',pricing:'open-source'},
+  {icon:'⚡',name:'Redis',desc:'In-memory data store for caching & real-time.',tags:['cache','realtime'],cat:'database',url:'https://redis.io',bestFor:'Performance',useCase:'Caching',pricing:'open-source'},
+  {icon:'▲',name:'Vercel',desc:'Deploy frontend apps instantly. Best Next.js host.',tags:['hosting','ci/cd'],cat:'deploy',url:'https://vercel.com',bestFor:'Next.js apps',useCase:'Frontend hosting',pricing:'freemium'},
+  {icon:'🌐',name:'Netlify',desc:'Continuous deployment for static sites.',tags:['hosting','static'],cat:'deploy',url:'https://netlify.com',bestFor:'Static sites',useCase:'Static hosting',pricing:'freemium'},
+  {icon:'🛤️',name:'Railway',desc:'Deploy backends & databases with zero config.',tags:['hosting','backend'],cat:'deploy',url:'https://railway.app',bestFor:'Backend apps',useCase:'Full-stack hosting',pricing:'paid'},
+  {icon:'☁️',name:'Cloudflare',desc:'CDN, DNS, and edge hosting for fast sites.',tags:['cdn','dns'],cat:'deploy',url:'https://cloudflare.com',bestFor:'Performance',useCase:'CDN & DNS',pricing:'freemium'},
+  {icon:'🛠️',name:'VS Code',desc:'Most popular code editor. Highly extensible.',tags:['editor','free'],cat:'tools',url:'https://code.visualstudio.com',bestFor:'All developers',useCase:'Code editing',pricing:'open-source'},
+  {icon:'🐙',name:'GitHub',desc:'Host code, collaborate, track versions.',tags:['git','collaboration'],cat:'tools',url:'https://github.com',bestFor:'All projects',useCase:'Version control',pricing:'freemium'},
+  {icon:'🃏',name:'Jest',desc:'Delightful JavaScript testing framework.',tags:['testing','js'],cat:'tools',url:'https://jestjs.io',bestFor:'JS testing',useCase:'Unit testing',pricing:'open-source'},
+  {icon:'🎭',name:'Playwright',desc:'E2E browser testing across all browsers.',tags:['testing','e2e'],cat:'tools',url:'https://playwright.dev',bestFor:'Browser testing',useCase:'E2E testing',pricing:'open-source'},
+  {icon:'📦',name:'Vite',desc:'Lightning-fast build tool and dev server.',tags:['build','fast'],cat:'tools',url:'https://vitejs.dev',bestFor:'Fast development',useCase:'Build tooling',pricing:'open-source'},
 ];
 
 const cheats=[
@@ -489,7 +494,7 @@ function openModal(){
         <div><div class="cmp-label">Description</div><div class="cmp-val">${t.desc}</div></div>
         <div><div class="cmp-label">Best For</div><div class="cmp-val">${t.bestFor}</div></div>
         <div><div class="cmp-label">Use Case</div><div class="cmp-val">${t.useCase}</div></div>
-        <div><div class="cmp-label">Free?</div><div class="cmp-val">${t.free?'✅ Free tier':'💳 Paid/freemium'}</div></div>
+        <div><div class="cmp-label">Pricing</div><div class="cmp-val">${'free'===t.pricing?'🟢 Free':'open-source'===t.pricing?'🔵 Open Source':'freemium'===t.pricing?'🟡 Freemium':'🔴 Paid'}</div></div>
         <div><div class="cmp-label">Tags</div><div class="cmp-val">${t.tags.join(', ')}</div></div>
         <div style="padding-top:8px"><a class="card-link" href="${t.url}" target="_blank">Visit ↗</a></div>
       </div></div>`;
@@ -509,6 +514,8 @@ function renderCards(){
   document.getElementById('cards-list').innerHTML=filtered.length
     ?filtered.map(t=>{
       const c=catColors[t.cat]||catColors.tools,isSaved=saved.includes(t.name),inCmp=compare.includes(t.name),ci=compare.indexOf(t.name);
+      const pMap={'free':['🟢','Free','pricing-free'],'freemium':['🟡','Freemium','pricing-freemium'],'paid':['🔴','Paid','pricing-paid'],'open-source':['🔵','Open Source','pricing-open-source']};
+      const [pIcon,pLabel,pClass]=pMap[t.pricing]||pMap['free'];
       return`<div class="card${isSaved?' saved-card':''}${inCmp?' in-compare':''}">
         ${inCmp?`<div class="compare-num">#${ci+1}</div>`:''}
         <div class="card-actions">
@@ -519,6 +526,7 @@ function renderCards(){
         <div class="card-name">${t.name}</div>
         <div class="card-desc">${t.desc}</div>
         <div class="card-tags">${t.tags.map(tg=>`<span class="tag">${tg}</span>`).join('')}</div>
+        <div style="margin-bottom:10px"><span class="pricing-badge ${pClass}">${pIcon} ${pLabel}</span></div>
         <div class="card-footer">
           <a class="card-link" href="${t.url}" target="_blank">Visit ↗</a>
           <span class="card-cat-badge" style="background:${c.bg};color:${c.color}">${t.cat}</span>
