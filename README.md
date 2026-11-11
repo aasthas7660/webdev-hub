@@ -61,6 +61,29 @@ WebDev Hub is a developer-focused learning platform designed to help beginners a
 - **Vercel** – Deployment
 
 
+## 🚀 Getting Started
+
+### Prerequisites
+- A modern web browser
+- Git (optional)
+
+### Installation
+
+1. Clone the repository:
+
+   git clone https://github.com/aasthas7660/webdev-hub.git
+
+2. Open the project folder.
+
+3. Open `index.html` in your browser.
+
+That's it! WebDev Hub is ready to explore.
+
+## 🌐 Live Demo
+
+[Visit WebDev Hub](https://webdev-hub-eosin.vercel.app/)
+
+
 ## 📸 Screenshots
 
 ### 🏠 Homepage
