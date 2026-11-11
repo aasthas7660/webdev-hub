@@ -83,6 +83,35 @@ That's it! WebDev Hub is ready to explore.
 
 [Visit WebDev Hub](https://webdev-hub-eosin.vercel.app/)
 
+## 📁 Project Structure
+
+```text
+webdev-hub/
+│
+├── index.html
+├── logo.png
+├── robots.txt
+├── sitemap.xml
+├── vercel.json
+├── screenshots/
+│   ├── home.png
+│   ├── roadmap-01.png
+│   ├── roadmap-02.png
+│   ├── roadmap-03.png
+│   ├── tools-library.png
+│   ├── learning-quiz.png
+│   ├── ai-features.png
+│   └── cheatsheet.png
+│
+└── README.md
+```
+## 🔮 Future Improvements
+
+- Complete and improve AI-powered features.
+- Add more development tools and learning resources.
+- Expand the learning roadmap with more topics.
+- Improve the user experience and accessibility.
+
 
 ## 📸 Screenshots
 
@@ -115,36 +144,6 @@ That's it! WebDev Hub is ready to explore.
 - AI-assisted guidance.
 - Progress tracking.
 - Easy access to essential developer resources.
-
-
-## 📁 Project Structure
-
-```text
-webdev-hub/
-│
-├── index.html
-├── logo.png
-├── robots.txt
-├── sitemap.xml
-├── vercel.json
-├── screenshots/
-│   ├── home.png
-│   ├── roadmap-01.png
-│   ├── roadmap-02.png
-│   ├── roadmap-03.png
-│   ├── tools-library.png
-│   ├── learning-quiz.png
-│   ├── ai-features.png
-│   └── cheatsheet.png
-│
-└── README.md
-```
-## 🔮 Future Improvements
-
-- Complete and improve AI-powered features.
-- Add more development tools and learning resources.
-- Expand the learning roadmap with more topics.
-- Improve the user experience and accessibility.
 
 
 ## 🎯 Project Goal
