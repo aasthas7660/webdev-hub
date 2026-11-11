@@ -138,7 +138,7 @@ webdev-hub/
 │   └── cheatsheet.png
 │
 └── README.md
-
+```
 ## 🔮 Future Improvements
 
 - Complete and improve AI-powered features.
