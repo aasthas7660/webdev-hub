@@ -50,6 +50,16 @@ WebDev Hub is a developer-focused learning platform designed to help beginners a
 
 ---
 
+## 🛠️ Tech Stack
+
+- **HTML5** – Website structure
+- **CSS3** – Styling, responsive layouts, themes and animations
+- **Vanilla JavaScript** – Interactive features and application logic
+- **Claude API** – AI-powered tool recommendations and code explanations
+- **Google Fonts** – Syne, DM Sans and DM Mono
+- **Browser localStorage** – Saves user preferences and learning progress
+- **Vercel** – Deployment
+
 
 ## 📸 Screenshots
 
