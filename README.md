@@ -2,6 +2,14 @@
 
 **Your complete guide to building websites, from beginner to builder.**
 
+<p align="left">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/AI-Claude-8E75B2" />
+  <img src="https://img.shields.io/badge/Status-Live-success" />
+</p>
+
 WebDev Hub is a developer-focused learning platform designed to help beginners and aspiring web developers navigate the world of web development. It brings together essential tools, libraries, learning resources, interactive quizzes, and AI-powered assistance in one place.
 
 🌐 **Live Website:** [WebDev Hub](https://webdev-hub-eosin.vercel.app/)
