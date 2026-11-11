@@ -150,7 +150,7 @@ webdev-hub/
 
 WebDev Hub was created to make learning web development easier and more organised for beginners.
 
-The goal is to bring learning roadmaps, development tools, coding references, and useful resources together in one place, helping learners move from beginner to builder with confidence.  ---
+The goal is to bring learning roadmaps, development tools, coding references, and useful resources together in one place, helping learners move from beginner to builder with confidence. 
 
 <p align="center">
   Built with ❤️ for developers.
