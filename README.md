@@ -116,20 +116,42 @@ That's it! WebDev Hub is ready to explore.
 - Progress tracking.
 - Easy access to essential developer resources.
 
-## 🚀 Live Demo
 
-Explore WebDev Hub:
+## 📁 Project Structure
 
-[⚡ Visit WebDev Hub](https://webdev-hub-eosin.vercel.app/)
+```text
+webdev-hub/
+│
+├── index.html
+├── logo.png
+├── robots.txt
+├── sitemap.xml
+├── vercel.json
+├── screenshots/
+│   ├── home.png
+│   ├── roadmap-01.png
+│   ├── roadmap-02.png
+│   ├── roadmap-03.png
+│   ├── tools-library.png
+│   ├── learning-quiz.png
+│   ├── ai-features.png
+│   └── cheatsheet.png
+│
+└── README.md
+
+## 🔮 Future Improvements
+
+- Complete and improve AI-powered features.
+- Add more development tools and learning resources.
+- Expand the learning roadmap with more topics.
+- Improve the user experience and accessibility.
+
 
 ## 🎯 Project Goal
 
-The goal of WebDev Hub is to make learning web development less confusing for beginners.
+WebDev Hub was created to make learning web development easier and more organised for beginners.
 
-With so many programming languages, frameworks, libraries, and development tools available, choosing where to start can be overwhelming.
-
-WebDev Hub brings these resources together and provides a structured way to learn, explore, and build websites with confidence.
-
+The goal is to bring learning roadmaps, development tools, coding references, and useful resources together in one place, helping learners move from beginner to builder with confidence.
 ---
 
 <p align="center">
