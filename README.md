@@ -50,6 +50,30 @@ WebDev Hub is a developer-focused learning platform designed to help beginners a
 
 ---
 
+
+## 📸 Screenshots
+
+### 🏠 Homepage
+![WebDev Hub Homepage](screenshots/home.png)
+
+### 🗺️ Step-by-Step Learning Roadmap
+![Roadmap 1](screenshots/roadmap-01.png)
+![Roadmap 2](screenshots/roadmap-02.png)
+![Roadmap 3](screenshots/roadmap-03.png)
+
+### 🧰 Tools & Libraries
+![Tools Library](screenshots/tools-library.png)
+
+### 🧠 Personalized Learning Quiz
+![Learning Quiz](screenshots/learning-quiz.png)
+
+### ✨ AI-Powered Features
+![AI Features](screenshots/ai-features.png)
+
+### 📋 Quick Cheatsheet
+![Quick Cheatsheet](screenshots/cheatsheet.png)
+
+
 ## 🛠️ What Makes It Useful?
 
 - Beginner-friendly learning experience.
